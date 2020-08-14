@@ -1,17 +1,14 @@
-# TickTalkTurk
-TickTalkTurk: Conversational Crowdsourcing Made Easy
+<!DOCTYPE html>
+<html lang="en">
 
-![logo](logo.png)
+<head>
+    <meta charset="UTF-8">
+    <title>Conversational Microtask Crowdsourcing</title>
+</head>
 
-- The workflow of [conversational microtask crowdsourcing](https://qiusihang.github.io/files/publications/chi2020_worker_engagement.pdf) is defined in `./js/ticktalkturk.js` (*taketurn* function).
+<body><div style="position:absolute; top:20px; bottom:20px; left:20px; right:20px; overflow:auto; border:1px solid black">
 
-- The examples of crowdsourcing tasks are in the folder `./tasks/captcha/`.
-
-## Usage
-
-You can use the following code to deploy conversational crowdsourcing tasks on the *Design Layout* page. You can also find the code in `index.html`, which is an example HIT (human intelligence task) for Amazon's Mechanical Turk.
-
-```
+<!-- You must include this JavaScript file -->
 <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
 
 <crowd-form answer-format="flatten-objects" style="position:absolute;top:5px;left:20px;right:20px;bottom:10px">
@@ -34,8 +31,8 @@ You can use the following code to deploy conversational crowdsourcing tasks on t
 
 </crowd-form>
 
-<script src="https://qiusihang.github.io/ticktalkturk/js/chatbot.js"></script>
-<script src="https://qiusihang.github.io/ticktalkturk/js/ticktalkturk.js"></script>
+<script src="./js/chatbot.js"></script>
+<script src="./js/ticktalkturk.js"></script>
 <script>
 
     var chatbot = new Chatbot(taketurn); // taketurn is a callback function defined in ticktalkturk.js
@@ -53,7 +50,7 @@ You can use the following code to deploy conversational crowdsourcing tasks on t
         style.rel = "stylesheet";
         style.type = "text/css";
         style.media = "all";
-        style.href = "https://qiusihang.github.io/ticktalkturk/style/client.css";
+        style.href = "./style/client.css";
         head.appendChild(style);
         style.onload = function() {
             document.getElementById("container").style.display = "block";
@@ -66,4 +63,7 @@ You can use the following code to deploy conversational crowdsourcing tasks on t
         }
     };
 </script>
-```
+
+</div></body>
+
+</html>

@@ -1,0 +1,305 @@
+::-webkit-scrollbar{
+display:none;
+}
+
+body{
+    background:#e6e6e6;
+}
+
+#container {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    width: 100%;
+    max-width: 1000px;
+
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+#history-container {
+    position: absolute;
+    overflow: scroll;
+    top: 0px;
+    bottom: 90px;
+    left: 0px;
+    right: 0px;
+}
+
+#chat-history {
+    width: 100%;
+    font-size: 16px;
+    font-family: sans-serif;
+    border-spacing: 0 10px;
+}
+
+#send-button {
+    position: absolute;
+    height: 80px;
+    line-height: 80px;
+    bottom: 0px;
+    width: 60px;
+    right: 0px;
+    background: #cccccc;
+    color: #666666;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+    transition:.2s ease-out;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#send-button:hover {
+    background: #d9d9d9;
+}
+
+#message-container {
+    position: absolute;
+    height: 80px;
+    bottom: 0px;
+    left: 0px;
+    right: 60px;
+    overflow: hidden;
+    background-color:#ffffff;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#message {
+    position: absolute;
+    border:0;
+    background-color:#ffffff;
+    overflow-y: scroll;
+    top: 10px;
+    bottom: 10px;
+    width: 95%;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #333333;
+    font-family: Helvetica, Arial, sans-serif;
+    outline:none;
+    overflow-y: scroll;
+    resize: none;
+}
+
+#message-cover {
+    position: absolute;
+    height: 80px;
+    line-height: 80px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+    background-color: #d9d9d9;
+    color: #999999;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    display: none;
+}
+
+#submit {
+    position: absolute;
+    height: 80px;
+    line-height: 80px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+    background-color: #d9d9d9;
+    color: #999999;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    display: none;
+}
+
+.bubble {
+    float:left;
+    display:inline-block;
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+    padding:6px 12px;
+    line-height:20px;
+    max-width:calc(80% - 50px);
+    min-width:100px;
+    font-size:12px;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing:1px;
+    text-align:left;
+    vertical-align:middle;
+    word-wrap:normal;
+    word-break: break-all;
+    white-space: normal;
+    background: #ffffff;
+    border-radius: 0px 10px 10px 10px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+}
+.left-arrow {
+    float:left;
+    display:inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid #ffffff;
+    border-left: 5px solid transparent;
+}
+
+.bubble-me {
+    float:right;
+    display:inline-block;
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+    padding:6px 12px;
+    line-height:20px;
+    max-width:calc(80% - 50px);
+    min-width:100px;
+    font-size:12px;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing:1px;
+    text-align:left;
+    vertical-align:middle;
+    word-wrap:normal;
+    word-break: break-all;white-space: normal;
+    background: #0099cc;
+    color: #ffffff;
+    border-radius: 10px 0px 10px 10px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    box-shadow: -1px 1px 1px rgba(0,0,0,0.2);
+}
+.right-arrow {
+    float:right;
+    display:inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid #0099cc;
+    border-right: 5px solid transparent;
+}
+
+.notification {
+    display:inline-block;
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+    line-height:20px;
+    width:100%;
+    font-size:10px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #666666;
+    letter-spacing:1px;
+    text-align:center;
+    vertical-align:middle;
+    word-wrap:normal;
+    word-break: break-all;white-space: normal;
+}
+
+.button {
+    display:inline-block;
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+    padding:6px 12px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    line-height:20px;
+    max-width:calc(80% - 50px);
+    min-width:100px;
+    font-size:12px;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing:1px;
+    text-align:center;
+    vertical-align:middle;
+    word-wrap:normal;
+    word-break: break-all;white-space: normal;
+    background: #cccccc;
+    color: #666666;
+    border-radius: 5px 5px 5px 5px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition:.2s ease-out;
+    user-select: none;
+}.button:hover {
+    background: #d9d9d9;
+}
+
+
+
+/*
+Loading animation - thanks to: https://loading.io/css
+*/
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 30px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
