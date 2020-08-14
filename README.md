@@ -1,5 +1,5 @@
 # TickTalkTurk
-TickTalkTurk: Conversational Crowdsourcing Made Easy [DEMO](https://qiusihang.github.io/ticktalkturk/index.html)
+TickTalkTurk: Conversational Crowdsourcing Made Easy ([DEMO](https://qiusihang.github.io/ticktalkturk/index.html))
 
 ![logo](logo.png)
 

@@ -62,8 +62,20 @@ var strip = function(text) {
 }
 
 var start_task = function() {
-    conversation["start"][0] = conversation["start"][0].replace("__TASK_NAME__",task["name"]);
-    chatbot.talk(conversation["start"]);
+    // load CSS file
+    var head = document.getElementsByTagName("head")[0];
+    var style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.type = "text/css";
+    style.media = "all";
+    style.href = "https://qiusihang.github.io/ticktalkturk/style/client.css";
+    // style.href = "./style/client.css";
+    head.appendChild(style);
+    style.onload = function() {
+        document.getElementById("container").style.display = "block";
+        conversation["start"][0] = conversation["start"][0].replace("__TASK_NAME__",task["name"]);
+        chatbot.talk(conversation["start"]);
+    }
 };
 
 var taketurn = function(chatbot, message) {

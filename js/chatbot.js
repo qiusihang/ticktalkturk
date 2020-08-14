@@ -1,5 +1,6 @@
 
-var Chatbot = function(taketurn, show_message = bubble) {
+var Chatbot = function(element, taketurn, show_message = bubble) {
+    element.innerHTML = chatbot_elements;
 
     this.taketurn = taketurn;
     this.show_message = show_message;
@@ -74,6 +75,13 @@ var Chatbot = function(taketurn, show_message = bubble) {
     }
 };
 
+var chatbot_elements = "<div id=\"container\" style=\"display:none;\">\
+    <div id=\"history-container\"><table id=\"chat-history\"></table></div>\
+    <div id=\"message-container\"><textarea id=\"message\" name=\"message\" onkeydown=\"onKeyDown(event)\" placeholder=\"Type your message here\"></textarea></div>\
+    <div id=\"send-button\" onclick=\"click_send()\">SEND</div>\
+    <div id=\"message-cover\">Please reply the chatbot by selecting an option.</div>\
+    <div id=\"submit\"><crowd-button form-action=\"submit\">Submit HIT</crowd-button></div>\
+    <textarea id=\"chat-answers\" name=\"chat-answers\" style=\"display:none\"></textarea></div>";
 
 var start_time = 0;
 var last_time = 0;

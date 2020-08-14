@@ -12,53 +12,21 @@
 <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
 
 <crowd-form answer-format="flatten-objects" style="position:absolute;top:5px;left:20px;right:20px;bottom:10px">
-
-<div id="container" style="display:none;">
-    <div id="history-container">
-        <table id="chat-history">
-        </table>
-    </div>
-    <div id="message-container">
-        <textarea id="message" name="message" onkeydown="onKeyDown(event)" placeholder="Type your message here"></textarea>
-    </div>
-    <div id="send-button" onclick="click_send()">SEND</div>
-    <div id="message-cover">Please reply the chatbot by selecting an option.</div>
-    <div id="submit">
-        <crowd-button form-action="submit">Submit HIT</crowd-button>
-    </div>
-    <textarea id="chat-answers" name="chat-answers" style="display:none"></textarea>
-</div>
-
+    <div id="chatbot"></div>
 </crowd-form>
 
 <script src="./js/chatbot.js"></script>
+<script src="./tasks/captcha/task1.js"></script>
 <script src="./js/ticktalkturk.js"></script>
 <script>
+    var chatbot = new Chatbot(document.getElementById("chatbot"), taketurn);
+    // taketurn is a callback function defined in ticktalkturk.js
 
-    var chatbot = new Chatbot(taketurn); // taketurn is a callback function defined in ticktalkturk.js
-
-    window.onload = function() {
-        // document.getElementById("message").focus();
-        var task = document.createElement("script");
-        task.src = "./tasks/captcha/task1.js";
-        document.body.appendChild(task);
-        task.onload = start_task;  // start is an initialization function defined in ticktalkturk.js
-
-        // load CSS file
-        var head = document.getElementsByTagName("head")[0];
-        var style = document.createElement("link");
-        style.rel = "stylesheet";
-        style.type = "text/css";
-        style.media = "all";
-        style.href = "./style/client.css";
-        head.appendChild(style);
-        style.onload = function() {
-            document.getElementById("container").style.display = "block";
-        }
-    }
+    window.onload = start_task;
+    // start_task is an initialization function defined in ticktalkturk.js
 
     document.querySelector('crowd-form').onsubmit = function(e) {
-        if ( document.getElementById("answers").value == "" ) {
+        if ( document.getElementById("chat-answers").value == "" ) {
             e.preventDefault();
         }
     };
