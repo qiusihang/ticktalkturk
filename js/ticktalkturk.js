@@ -138,7 +138,7 @@ var taketurn = function(chatbot, message) {
                 current_conv = "bye";
                 document.getElementById("submit").style.display = "block";
                 document.getElementById("message").disabled = true;
-                document.getElementById("answers").value = JSON.stringify(answers);
+                document.getElementById("chat-answers").value = JSON.stringify(answers);
             } else if ( message.includes("[no]") ) {
                 chatbot.talk(conversation["edit"]);
                 current_conv = "edit";

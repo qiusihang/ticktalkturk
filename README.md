@@ -1,5 +1,5 @@
 # TickTalkTurk
-TickTalkTurk: Conversational Crowdsourcing Made Easy
+TickTalkTurk: Conversational Crowdsourcing Made Easy [DEMO](https://qiusihang.github.io/ticktalkturk/index.html)
 
 ![logo](logo.png)
 
@@ -29,7 +29,7 @@ You can use the following code to deploy conversational crowdsourcing tasks on t
     <div id="submit">
         <crowd-button form-action="submit">Submit HIT</crowd-button>
     </div>
-    <textarea id="answers" name="answers" style="display:none"></textarea>
+    <textarea id="chat-answers" name="chat-answers" style="display:none"></textarea>
 </div>
 
 </crowd-form>
@@ -43,7 +43,7 @@ You can use the following code to deploy conversational crowdsourcing tasks on t
     window.onload = function() {
         // document.getElementById("message").focus();
         var task = document.createElement("script");
-        task.src = "./tasks/captcha/task1.js";
+        task.src = "https://qiusihang.github.io/ticktalkturk/tasks/captcha/task1.js";
         document.body.appendChild(task);
         task.onload = start_task;  // start is an initialization function defined in ticktalkturk.js
 
