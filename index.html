@@ -8,7 +8,6 @@
 
 <body><div style="position:absolute; top:20px; bottom:20px; left:20px; right:20px; overflow:auto; border:1px solid black">
 
-<!-- You must include this JavaScript file -->
 <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
 
 <crowd-form answer-format="flatten-objects" style="position:absolute;top:5px;left:20px;right:20px;bottom:10px">
@@ -16,7 +15,7 @@
 </crowd-form>
 
 <script src="./js/chatbot.js"></script>
-<script src="./tasks/captcha/task1.js"></script>
+<script src="./tasks/captcha/task1.js"></script> <!-- load crowdsourcing microtasks -->
 <script src="./js/ticktalkturk.js"></script>
 <script>
     var chatbot = new Chatbot(document.getElementById("chatbot"), taketurn);
@@ -26,9 +25,7 @@
     // start_task is an initialization function defined in ticktalkturk.js
 
     document.querySelector('crowd-form').onsubmit = function(e) {
-        if ( document.getElementById("chat-answers").value == "" ) {
-            e.preventDefault();
-        }
+        if ( document.getElementById("chat-answers").value == "" ) e.preventDefault();
     };
 </script>
 
