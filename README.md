@@ -9,7 +9,7 @@ TickTalkTurk: Conversational Crowdsourcing Made Easy ([DEMO](https://qiusihang.g
 
 ## Usage
 
-You can use the following code to deploy conversational crowdsourcing tasks on the *Design Layout* page. You can also find the code in `index.html`, which is an example HIT (human intelligence task) for Amazon's Mechanical Turk.
+You can use the following code to deploy conversational crowdsourcing tasks on the *Design Layout* page for Amazon's Mechanical Turk. You can also find the code in `index.html`, which is an example HIT (human intelligence task).
 
 ```
 <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
