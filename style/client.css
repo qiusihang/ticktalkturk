@@ -242,6 +242,30 @@ body{
     background: #d9d9d9;
 }
 
+.profile-image {
+    display:inline-block;
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+    background: #f2f2f2;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.profile-image-charac {
+    width: 50px;
+    height:12px;
+    line-height: 12px;
+    vertical-align: middle;
+    text-align: center;
+    letter-spacing:0px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 7px;
+    border-radius: 6px;
+    color: #ffffff;
+}
 
 
 /*

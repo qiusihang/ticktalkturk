@@ -155,6 +155,19 @@ var bubble = function(message) {
     to_bottom();
 }
 
+var user_image = "https://qiusihang.github.io/ticktalkturk/res/default.png";
+var chatbot_image = "https://qiusihang.github.io/ticktalkturk/res/andrea.png";
+var profile_image = function(username) {
+    if ( username == "__you__") {
+        var img = "<div style=\"float:right\" class=\"profile-image\"><img class=\"user-image\" height=\"100%\" src=\""+user_image+"\" />";
+        // img += "<div class=\"profile-image-charac\"></div>";
+        img += "</div>";
+        return img;
+    } else {
+        return "<div style=\"float:left\" class=\"profile-image\"><img height=\"100%\" src=\""+chatbot_image+"\"/></div>";
+    }
+}
+
 var bubble_content = function(message) {
     var i = message.indexOf(":");
     if ( i < 0 )
@@ -169,14 +182,19 @@ var bubble_content = function(message) {
         result = "<span style=\"font-size:10px;color:#d9d9d9;\">"
     }
     result += ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2) + "</span><br/>"; // show time hh:mm
-    result += message.substring(i+1,message.length).split('%')[0]; // show message, remove comment
+
+    var message_content = message.substring(i+1,message.length);
+    if (message_content.indexOf("RAW:") == 0) {
+        result += message_content.replace("RAW:",""); // raw message, keep comment
+    } else {
+        result += message_content.split('%')[0]; // show message, remove comment
+    }
     if (username == "__you__")
-        result = "<div class=\"right-arrow\"></div><div class=\"bubble-me\">" + result + "</div>";  // user's bubble
+        result = profile_image(username)+"<div class=\"right-arrow\"></div><div class=\"bubble-me\">" + result + "</div>";  // user's bubble
     else
-        result = "<div class=\"left-arrow\"></div><div class=\"bubble\">" + result + "</div>";      // other's bubble
+        result = profile_image(username)+"<div class=\"left-arrow\"></div><div class=\"bubble\">" + result + "</div>";      // other's bubble
     return result;
 }
-
 
 var click_send = function() {
     var m = document.getElementById("message");
