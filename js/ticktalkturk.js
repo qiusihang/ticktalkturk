@@ -16,7 +16,8 @@ var conversation = {
         "buttons-only:#Yes, I want to see the task instructions.%[yes]#No, I don\'t.%[no]"
     ],
     "instructions": [
-        "Good. I think you now understand how to complete tasks. Shall we move on?"
+        "Good. I think you now understand how to complete tasks. Shall we move on?",
+        "buttons:#OK"
     ],
     "first_question": [
         "Look. The first question."
@@ -113,7 +114,7 @@ var taketurn = function(chatbot, message) {
                 break;
             }
             if ( strip(message).includes("instruction")) {
-                chatbot.talk(conversation["instructions"]);
+                chatbot.talk(task["instruction"].concat(conversation["instructions"]));
                 current_conv = "instructions";
                 break;
             }
@@ -227,7 +228,10 @@ var get_review = function() {
     review_process = true;
     for (var i = 0; i < max_question_id; i++)
         ans_string += "<br/><b>Q" + (i + 1) + ":</b> " + answers[i];
-    var review = conversation["review"];
+    var review = []
+    conversation["review"].forEach((item, i) => {
+        review.push(item);
+    });
     for ( var i = 0 ; i < review.length ; i ++ )
         review[i] = review[i].replace("__ANSWER__",ans_string);
     return review;
