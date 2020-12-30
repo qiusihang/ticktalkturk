@@ -26,8 +26,8 @@ body{
     overflow: scroll;
     top: 0px;
     bottom: 90px;
-    left: 0px;
-    right: 0px;
+    left: 10px;
+    right: 10px;
 }
 
 #chat-history {
@@ -43,7 +43,7 @@ body{
     line-height: 80px;
     bottom: 0px;
     width: 60px;
-    right: 0px;
+    right: 10px;
     background: #cccccc;
     color: #666666;
     font-size: 12px;
@@ -68,7 +68,7 @@ body{
     position: absolute;
     height: 80px;
     bottom: 0px;
-    left: 0px;
+    left: 10px;
     right: 60px;
     overflow: hidden;
     background-color:#ffffff;
@@ -97,8 +97,8 @@ body{
     height: 80px;
     line-height: 80px;
     bottom: 0px;
-    left: 0px;
-    right: 0px;
+    left: 10px;
+    right: 10px;
     overflow: hidden;
     background-color: #d9d9d9;
     color: #999999;
