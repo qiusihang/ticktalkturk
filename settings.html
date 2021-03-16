@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Settings</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" media="all" href="./style/client.css">
+    <style>
+        body{
+            background:#ffffff;
+        }
+        #setting-container {
+            background:#e6e6e6;
+            position: absolute;
+            top: 50px;
+            bottom: 100px;
+            width: 100%;
+            max-width: 1000px;
+            border: solid black 1px;
+            left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
+        }
+        .bubble-message {
+            width: 300px;
+            height: 50px;
+            border: solid 1px #666666;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        .settings-button {
+            display:inline-block;
+            -webkit-box-sizing:content-box;
+            -moz-box-sizing:content-box;
+            box-sizing:content-box;
+            padding:6px 12px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            line-height:22px;
+            max-width:calc(80% - 50px);
+            min-width:50px;
+            font-size:12px;
+            font-family: Helvetica, Arial, sans-serif;
+            letter-spacing:1px;
+            text-align:center;
+            vertical-align:middle;
+            word-wrap:normal;
+            word-break: break-all;white-space: normal;
+            background: #333333;
+            color: #ffffff;
+            border-radius: 5px;
+            word-break: keep-all;
+            word-wrap: break-word;
+            cursor: pointer;
+            transition:.2s ease-out;
+            user-select: none;
+        }.settings-button:hover {
+            background: #666666;
+        }
+        #foot{
+            position: absolute;
+            bottom: 10px;
+            height: 80px;
+            width: 100%;
+            text-align: center;
+            vertical-align: top;
+        }
+        #preview{
+            display: none;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }
+    </style>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+</head>
+
+<body>
+
+    <div id="setting-container">
+        <div id="history-container">
+            <table id="chat-history">
+            </table>
+        </div>
+        <div id="message-container"><textarea id="message" name="message" placeholder="Type your message here" rows="1" disabled></textarea></div>
+        <div id="send-button" style="cursor:auto;"><img src="./style/send.png" width="20px" style="vertical-align:middle"/></div>
+    </div>
+    <div id="foot">
+        <div class="button" onclick="preview()">Preview</div>
+        <div class="button" onclick="generate_conversation()">Generate Code</div>
+    </div>
+    <div id="preview"></div>
+
+
+
+    <script>
+        window.onload = function() {
+            create_new_turn(0);
+        };
+
+        var to_bottom = function() {
+            var div = document.getElementById("history-container");
+            div.scrollTop = div.scrollHeight;   // go to the bottom
+        }
+
+        var create_bot_bubble = function(index, del=true) {
+            var content = "\
+            <div class=\"left-arrow\"></div><div class=\"bubble\">\
+                Type: <select name=\"type\" oninput=\"select_type(this)\">\
+                    <option value=\"text\">text</option>\
+                    <option value=\"image\">image</option>\
+                    <option value=\"buttons\">radio buttons</option>\
+                    <option value=\"checkboxes\">checkboxes</option>\
+                </select><br/>\
+                Message:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in your message here...\"></textarea>\
+            </div>\
+            <div class=\"settings-button\" onclick=\"add_button(this)\">Add</div>";
+            if (del) content += "<div class=\"settings-button\" onclick=\"del_button(this)\">Delete</div>";
+            var table = document.getElementById("chat-history");
+            var row = table.insertRow(index);
+            var cell = row.insertCell();
+            cell.innerHTML = content;
+            to_bottom();
+        };
+
+        var create_bot_bubble_me = function(index) {
+            var content = "\
+            <div class=\"right-arrow\"></div><div class=\"bubble-me\">\
+                Validation: <select name=\"validation\" oninput=\"select_validation(this)\">\
+                    <option value=\"none\">None</option>\
+                    <option value=\"yes\">Keyword-based</option>\
+                </select><br/>\
+                <div class=\"keywords\" style=\"display:none\" >\
+                    Keywords/phrases:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in the keywords/phrases (seperated by semicolons ';'). If a keyword/phrase is found in user's response, the conversation moves on.\"></textarea>\
+                </div>\
+            </div>";
+            var table = document.getElementById("chat-history");
+            var row = table.insertRow(index);
+            var cell = row.insertCell();
+            cell.innerHTML = content;
+            to_bottom();
+        }
+
+        var create_new_turn = function(index) {
+            create_bot_bubble(index,false);
+            create_bot_bubble_me(index+1,false);
+            var table = document.getElementById("chat-history");
+            var row = table.insertRow(index+2);
+            var cell = row.insertCell();
+            cell.style = "text-align:center"
+            cell.innerHTML = "<hr><div class=\"settings-button\" style=\"border-radius:20px;background:#999999\" onclick=\"add_turn(this)\">New Turn</div>";
+            to_bottom();
+        }
+
+        var select_type = function(e) {
+            var ta = e.parentNode.querySelector("textarea.bubble-message");
+            switch (e.value) {
+                case "text":        ta.placeholder = "Fill in your message here..."; break;
+                case "image":       ta.placeholder = "Fill in the image URL here..."; break;
+                case "buttons":
+                case "checkboxes":  ta.placeholder = "Fill in the options here (seperated by semicolons ';')..."; break;
+            }
+        };
+
+        var select_validation = function(e) {
+            switch (e.value) {
+                case "none":    e.parentNode.querySelector("div.keywords").style.display = "none";  break;
+                default:        e.parentNode.querySelector("div.keywords").style.display = "block"; break;
+            }
+        };
+
+        var add_turn = function(e) {
+            var row = e.parentNode.parentNode;
+            e.innerHTML = "Delete Turn";
+            e.setAttribute( "onClick", "javascript: del_turn(this);" );
+            create_new_turn(row.rowIndex+1);
+        }
+
+        var del_turn = function(e) {
+            var row = e.parentNode.parentNode;
+            var ri = row.rowIndex;
+            var table = document.getElementById("chat-history");
+            while (true) {
+                table.deleteRow(ri);
+                if ( table.rows[ri].cells[0].firstChild.tagName == "HR" ) break;
+            }
+        }
+
+        var add_button = function(e) {
+            var row = e.parentNode.parentNode;
+            create_bot_bubble(row.rowIndex+1);
+        }
+
+        var del_button = function(e) {
+            var row = e.parentNode.parentNode;
+            var table = document.getElementById("chat-history");
+            table.deleteRow(row.rowIndex);
+        }
+
+        var generate_conversation = function() {
+            var table = document.getElementById("chat-history");
+            var survey = [];
+            var ri = 0;
+            var t = 0
+            var l = table.rows.length;
+            var flag = true;
+
+            while ( ri < l ) {
+                var q = {"messages":[]};
+                while ( ri < l ) {
+                    if ( table.rows[ri].cells[0].firstChild.tagName == "HR" ) break; // next turn
+                    var bb = table.rows[ri].cells[0].querySelector("div.bubble");
+                    if ( bb == null ) bb = table.rows[ri].cells[0].querySelector("div.bubble-me");
+                    var sl = bb.querySelector("select");
+                    var ta = sl.parentNode.querySelector("textarea.bubble-message");
+                    ta.style.border = "solid 1px #666666";
+                    switch (sl.value) {
+                        case "text":
+                            if ( ta.value.length < 1 ) { flag = false; ta.style.border = "solid 1px red"; }
+                            q.messages.push(ta.value);
+                            break;
+                        case "image":
+                            if ( ta.value.length < 1 ) { flag = false; ta.style.border = "solid 1px red"; }
+                            q.messages.push("<img style=\"max-width:500px;width:100%\" src=\""+ta.value+"\"/>");
+                            break;
+                        case "buttons":
+                            if ( ta.value.length < 1 ) { flag = false; ta.style.border = "solid 1px red"; }
+                            ops = ta.value.split("#").join("").split(";");
+                            for ( var i = 0 ; i < ops.length ; i ++ ) ops[i] = ops[i].trim();
+                            q.messages.push("buttons:#"+ops.join("#"));
+                            break;
+                        case "checkboxes":
+                            if ( ta.value.length < 1 ) { flag = false; ta.style.border = "solid 1px red"; }
+                            ops = ta.value.split("#").join("").split(";");
+                            for ( var i = 0 ; i < ops.length ; i ++ ) ops[i] = ops[i].trim();
+                            q.messages.push("checkbox:#"+ops.join("#"));
+                            break;
+                        case "yes":
+                            if ( ta.value.length < 1 ) { flag = false; ta.style.border = "solid 1px red"; }
+                            ops = ta.value.split("#").join("").split(";");
+                            for ( var i = 0 ; i < ops.length ; i ++ ) ops[i] = ops[i].trim();
+                            q["validation"] = "#"+ops.join("#");
+                            break;
+                        default: break;
+                    }
+                    ri += 1;
+                }
+                survey.push(q);
+                ri += 1;
+                t += 1;
+            }
+
+            if (!flag) {
+                alert("Please fill in your message(s).");
+                return "[]";
+            } else {
+                return JSON.stringify(survey);
+            }
+        }
+
+        var generate_html = function() {
+            var template = "\
+            <!DOCTYPE html>\
+            <html lang=\"en\">\
+            <head>\
+                <meta charset=\"UTF-8\">\
+                <title>Chatbot</title>\
+                <link rel=\"icon\" href=\"data:,\">\
+                <link rel=\"stylesheet\" media=\"all\" href=\"https://qiusihang.github.io/ticktalkturk/style/client.css\">\
+                <meta content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0\" name=\"viewport\" />\
+            </head>\
+            <body>\
+                <div id=\"container\">\
+                    <div id=\"history-container\">\
+                        <table id=\"chat-history\">\
+                        </table>\
+                    </div>\
+                    <div id=\"message-container\">\
+                        <textarea id=\"message\" name=\"message\" onkeydown=\"onKeyDown(event)\" placeholder=\"Type your message here\" rows=\"1\"></textarea>\
+                    </div>\
+                    <div id=\"send-button\" onclick=\"click_send()\"><img src=\"https://qiusihang.github.io/ticktalkturk/style/send.png\" width=\"20px\" style=\"vertical-align:middle\"/></div>\
+                    <div id=\"message-cover\">Please reply the chatbot by selecting the option(s).</div>\
+                    <div id=\"submit\" style=\"cursor:pointer\" onclick=\"submit()\">\
+                        <div style=\"font-size:16px;border:0px;background:rgba(0,0,0,0);color:#666666\"><b>SUBMIT</b></div>\
+                        <textarea id=\"chat-answer\" name=\"chat-answer\" style=\"display:none\"></textarea>\
+                    </div>\
+                </div>\
+                <sssss src=\"https://qiusihang.github.io/ticktalkturk/js/jquery.js\"></sssss>\
+                <sssss src=\"https://qiusihang.github.io/ticktalkturk/js/chatbot.js\"></sssss>\
+                <sssss src=\"https://qiusihang.github.io/ticktalkturk/js/client.js\"></sssss>\
+                <sssss> var survey = SURVEY; window.onload = init(); </sssss>\
+            </body>\
+            </html>";
+            template = template.split("sssss").join("script").replace("SURVEY",generate_conversation());
+            console.log(template);
+            return template;
+        }
+
+        var preview = function() {
+            var iframe = document.createElement("iframe");
+            iframe.style = "height:100%;width:100%";
+            iframe.src = "data:text/html;charset=utf-8," + encodeURI(generate_html());
+            document.getElementById("preview").appendChild(iframe);
+            document.getElementById("preview").style.display = "block";
+        }
+
+    </script>
+
+</body>
+
+</html>

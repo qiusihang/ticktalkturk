@@ -2,8 +2,14 @@
 display:none;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body{
-    background:#e6e6e6;
+    background-image: url('https://qiusihang.github.io/ticktalkturk/style/pattern.png');
+    /* background: #e1e1ea; */
+    /* background:#e6e6e6; */
 }
 
 #container {
@@ -32,21 +38,22 @@ body{
 
 #chat-history {
     width: 100%;
-    font-size: 16px;
+    font-size: 14px;
     font-family: sans-serif;
     border-spacing: 0 10px;
 }
 
 #send-button {
     position: absolute;
-    height: 80px;
-    line-height: 80px;
-    bottom: 0px;
+    height: 60px;
+    line-height: 60px;
+    bottom: 10px;
     width: 60px;
     right: 10px;
-    background: #cccccc;
+    /* background: #cccccc; */
+    background: #ffffff;
     color: #666666;
-    font-size: 12px;
+    font-size: 14px;
     font-family: Helvetica, Arial, sans-serif;
     text-align: center;
     vertical-align: middle;
@@ -60,14 +67,14 @@ body{
     -ms-user-select: none;
     user-select: none;
 }
-#send-button:hover {
+/* #send-button:hover {
     background: #d9d9d9;
-}
+} */
 
 #message-container {
     position: absolute;
-    height: 80px;
-    bottom: 0px;
+    height: 60px;
+    bottom: 10px;
     left: 10px;
     right: 60px;
     overflow: hidden;
@@ -79,28 +86,31 @@ body{
     position: absolute;
     border:0;
     background-color:#ffffff;
-    overflow-y: scroll;
-    top: 10px;
+    left: 10px;
     bottom: 10px;
+    height: 40px;
+    line-height: 40px;
     width: 95%;
-    padding-left: 10px;
     font-size: 14px;
     color: #333333;
     font-family: Helvetica, Arial, sans-serif;
     outline:none;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    white-space: nowrap;
+    overflow-x: scroll;
     resize: none;
 }
 
 #message-cover {
     position: absolute;
-    height: 80px;
-    line-height: 80px;
-    bottom: 0px;
+    height: 60px;
+    line-height: 60px;
+    bottom: 10px;
     left: 10px;
     right: 10px;
     overflow: hidden;
-    background-color: #d9d9d9;
+    /* background-color: #d9d9d9; */
+    background-color: #f0f0f5;
     color: #999999;
     border-radius: 5px 5px 5px 5px;
     font-size: 14px;
@@ -112,13 +122,14 @@ body{
 
 #submit {
     position: absolute;
-    height: 80px;
-    line-height: 80px;
-    bottom: 0px;
+    height: 60px;
+    line-height: 60px;
+    bottom: 10px;
     left: 0px;
     right: 0px;
     overflow: hidden;
-    background-color: #d9d9d9;
+    /* background-color: #d9d9d9; */
+    background-color: #f0f0f5;
     color: #999999;
     border-radius: 5px 5px 5px 5px;
     font-size: 14px;
@@ -135,7 +146,7 @@ body{
     -moz-box-sizing:content-box;
     box-sizing:content-box;
     padding:6px 12px;
-    line-height:20px;
+    line-height:22px;
     max-width:calc(80% - 50px);
     min-width:100px;
     font-size:12px;
@@ -147,7 +158,7 @@ body{
     word-break: break-all;
     white-space: normal;
     background: #ffffff;
-    border-radius: 0px 10px 10px 10px;
+    border-radius: 0px 15px 5px 15px;
     word-break: keep-all;
     word-wrap: break-word;
     box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
@@ -168,7 +179,7 @@ body{
     -moz-box-sizing:content-box;
     box-sizing:content-box;
     padding:6px 12px;
-    line-height:20px;
+    line-height:22px;
     max-width:calc(80% - 50px);
     min-width:100px;
     font-size:12px;
@@ -178,9 +189,11 @@ body{
     vertical-align:middle;
     word-wrap:normal;
     word-break: break-all;white-space: normal;
-    background: #0099cc;
-    color: #ffffff;
-    border-radius: 10px 0px 10px 10px;
+    /* background: #808080;
+    color: #ffffff; */
+    background: #d9ffcc;
+    color: #000000;
+    border-radius: 15px 0px 15px 5px;
     word-break: keep-all;
     word-wrap: break-word;
     box-shadow: -1px 1px 1px rgba(0,0,0,0.2);
@@ -190,7 +203,8 @@ body{
     display:inline-block;
     width: 0;
     height: 0;
-    border-top: 5px solid #0099cc;
+    /* border-top: 5px solid #808080; */
+    border-top: 5px solid #d9ffcc;
     border-right: 5px solid transparent;
 }
 
@@ -219,9 +233,9 @@ body{
     padding:6px 12px;
     margin-left: 5px;
     margin-bottom: 5px;
-    line-height:20px;
+    line-height:22px;
     max-width:calc(80% - 50px);
-    min-width:100px;
+    min-width:50px;
     font-size:12px;
     font-family: Helvetica, Arial, sans-serif;
     letter-spacing:1px;
@@ -229,17 +243,20 @@ body{
     vertical-align:middle;
     word-wrap:normal;
     word-break: break-all;white-space: normal;
-    background: #cccccc;
-    color: #666666;
+    /* background: #cccccc;
+    color: #666666; */
+    background: rgba(71, 71, 107, 0.5);
+    color: #ffffff;
     border-radius: 5px 5px 5px 5px;
     word-break: keep-all;
     word-wrap: break-word;
-    box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+    /* box-shadow: 0px 1px 1px rgba(0,0,0,0.2); */
     cursor: pointer;
     transition:.2s ease-out;
     user-select: none;
 }.button:hover {
-    background: #d9d9d9;
+background: rgba(71, 71, 107, 1);
+    /* background: #d9d9d9; */
 }
 
 .profile-image {
@@ -266,6 +283,42 @@ body{
     border-radius: 6px;
     color: #ffffff;
 }
+
+
+
+
+/* Slide style */
+
+.slider {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #df8465;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #df8465;
+  cursor: pointer;
+}
+
 
 
 /*
