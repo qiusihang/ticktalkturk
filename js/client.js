@@ -65,8 +65,6 @@ var survey_repeat_question = function() {
 };
 
 var submit = function() {
-    var res = {answers: answers};
-    console.log(res);
     // Do what you want to do here!
 }
 
