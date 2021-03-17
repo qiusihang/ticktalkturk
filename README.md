@@ -19,4 +19,4 @@ CSCW 2020 Demonstration.
 
 - The workflow of [conversational microtask crowdsourcing](https://qiusihang.github.io/files/publications/chi2020_worker_engagement.pdf) is defined in `./js/client.js` (complex task workflow can be customized here).
 
-- Download the code of the previous version [HERE](https://qiusihang.github.io/ticktalkturk/v1.zip)
+- Download the code of the previous version [HERE](https://qiusihang.github.io/ticktalkturk/v1.zip).
