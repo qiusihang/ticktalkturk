@@ -55,6 +55,14 @@
         }.settings-button:hover {
             background: #666666;
         }
+        #head{
+            position: absolute;
+            top: 10px;
+            height: 30px;
+            width: 100%;
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+        }
         #foot{
             position: absolute;
             bottom: 10px;
@@ -77,6 +85,9 @@
 
 <body>
 
+    <div id="head">
+        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle"></textarea></div>
+    </div>
     <div id="setting-container">
         <div id="history-container">
             <table id="chat-history">
@@ -87,16 +98,22 @@
     </div>
     <div id="foot">
         <div class="button" onclick="preview()">Preview</div>
-        <div class="button" onclick="generate_conversation()">Generate Code</div>
+        <div class="button" onclick="download_code()">Generate Code</div>
+        <div class="button" onclick="set_example()">Example</div>
+        <div class="button" onclick="clear_all()">Clear All</div>
     </div>
-    <div id="preview"></div>
+    <div id="preview">
+        <div style="position:absolute;top:10px;left:0px;right:0px;height:50px;text-align:center;z-index:10">
+            <div class="button" style="border-radius: 20px;" onclick="close_preview()">CLOSE PREVIEW</div>
+        </div>
+    </div>
 
 
 
     <script>
-        window.onload = function() {
-            create_new_turn(0);
-        };
+        var chatbot_name = "test";
+
+        window.onload = function() {set_example();}
 
         var to_bottom = function() {
             var div = document.getElementById("history-container");
@@ -131,7 +148,7 @@
                     <option value=\"yes\">Keyword-based</option>\
                 </select><br/>\
                 <div class=\"keywords\" style=\"display:none\" >\
-                    Keywords/phrases:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in the keywords/phrases (seperated by semicolons ';'). If a keyword/phrase is found in user's response, the conversation moves on.\"></textarea>\
+                    Keywords/phrases for validation:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in the keywords/phrases (seperated by semicolons ';'). If a keyword/phrase is found in user's response, the conversation moves on.\"></textarea>\
                 </div>\
             </div>";
             var table = document.getElementById("chat-history");
@@ -259,8 +276,7 @@
         }
 
         var generate_html = function() {
-            var template = "\
-            <!DOCTYPE html>\
+            var template = "<!DOCTYPE html>\
             <html lang=\"en\">\
             <head>\
                 <meta charset=\"UTF-8\">\
@@ -291,19 +307,64 @@
                 <sssss> var survey = SURVEY; window.onload = init(); </sssss>\
             </body>\
             </html>";
-            template = template.split("sssss").join("script").replace("SURVEY",generate_conversation());
-            console.log(template);
+            chatbot_name = document.getElementById("chatbot-name").value;
+            template = template.split("sssss").join("script");
+            template = template.replace("SURVEY",generate_conversation()+(chatbot_name.length>0?"; var chatbot_name=\""+chatbot_name+"\"":""));
+            template = template.split("    ").join("");
             return template;
         }
 
         var preview = function() {
+            if ( generate_conversation() == "[]" ) return;
             var iframe = document.createElement("iframe");
             iframe.style = "height:100%;width:100%";
-            iframe.src = "data:text/html;charset=utf-8," + encodeURI(generate_html());
             document.getElementById("preview").appendChild(iframe);
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(generate_html());
+            iframe.contentWindow.document.close();
             document.getElementById("preview").style.display = "block";
         }
 
+        var close_preview = function() {
+            document.getElementById("preview").style.display = "none";
+            document.getElementById("preview").removeChild(document.getElementById("preview").querySelector("iframe"));
+        }
+
+        var download_code = function() {
+            if ( generate_conversation() == "[]" ) return;
+            var element = document.createElement('a');
+            element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(generate_html()));
+            element.setAttribute('download', "chatbot.html");
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        var set_example = function() {
+            var table = document.getElementById("chat-history");
+            while (table.rows.length > 0) table.deleteRow(0);
+            create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hello! How are you doing? Can you help me complete this task?";
+            create_bot_bubble(1);   table.rows[1].cells[0].querySelector("select").value = "buttons"; table.rows[1].cells[0].querySelector("textarea").value = "No problem.; I would love to!";
+            create_new_turn(4);     table.rows[4].cells[0].querySelector("select").value = "image"; table.rows[4].cells[0].querySelector("textarea").value = "https://qiusihang.github.io/ticktalkturk/logo.png";
+            create_bot_bubble(5);   table.rows[5].cells[0].querySelector("textarea").value = "Is this the logo of TickTalkTurk?";
+            create_bot_bubble(6);   table.rows[6].cells[0].querySelector("select").value = "buttons"; table.rows[6].cells[0].querySelector("textarea").value = "Yes";
+                                    table.rows[7].cells[0].querySelector("select").value = "yes"; table.rows[7].cells[0].querySelector("textarea").value = "Yes; No"; table.rows[7].cells[0].querySelector("textarea").parentNode.style.display = "block";
+            create_new_turn(9);     table.rows[9].cells[0].querySelector("textarea").value = "Please check the statement(s) that you agree with.";
+            create_bot_bubble(10);  table.rows[10].cells[0].querySelector("select").value = "checkboxes"; table.rows[10].cells[0].querySelector("textarea").value = "This chatbot is interesting; This chatbot is easy-to-use; This chatbot is funny";
+
+            var div = document.getElementById("history-container");
+            div.scrollTop = 0;   // go to the top
+        }
+
+        var clear_all = function() {
+            var table = document.getElementById("chat-history");
+            while (table.rows.length > 0) table.deleteRow(0);
+            create_new_turn(0);
+
+            var div = document.getElementById("history-container");
+            div.scrollTop = 0;   // go to the top
+        }
     </script>
 
 </body>

@@ -1,4 +1,3 @@
-var chatbot_name = "Andrea"; // optional
 var userid = "";
 var answers = [];
 var task_completed = false;
