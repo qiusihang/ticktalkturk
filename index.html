@@ -86,7 +86,7 @@
 <body>
 
     <div id="head">
-        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle"></textarea></div>
+        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle">Andrea</textarea></div>
     </div>
     <div id="setting-container">
         <div id="history-container">
@@ -344,14 +344,16 @@
         var set_example = function() {
             var table = document.getElementById("chat-history");
             while (table.rows.length > 0) table.deleteRow(0);
-            create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hello! How are you doing? Can you help me complete this task?";
+            create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hi, I'm Andrea. How are you doing? Can you help me complete this task?";
             create_bot_bubble(1);   table.rows[1].cells[0].querySelector("select").value = "buttons"; table.rows[1].cells[0].querySelector("textarea").value = "No problem.; I would love to!";
             create_new_turn(4);     table.rows[4].cells[0].querySelector("select").value = "image"; table.rows[4].cells[0].querySelector("textarea").value = "https://qiusihang.github.io/ticktalkturk/logo.png";
             create_bot_bubble(5);   table.rows[5].cells[0].querySelector("textarea").value = "Is this the logo of TickTalkTurk?";
             create_bot_bubble(6);   table.rows[6].cells[0].querySelector("select").value = "buttons"; table.rows[6].cells[0].querySelector("textarea").value = "Yes; No";
                                     table.rows[7].cells[0].querySelector("select").value = "yes"; table.rows[7].cells[0].querySelector("textarea").value = "Yes"; table.rows[7].cells[0].querySelector("textarea").parentNode.style.display = "block";
+                                    table.rows[3].cells[0].querySelector("div.settings-button").innerHTML = "Delete Turn"; table.rows[3].cells[0].querySelector("div.settings-button").setAttribute( "onClick", "javascript: del_turn(this);" );
             create_new_turn(9);     table.rows[9].cells[0].querySelector("textarea").value = "Please check the statement(s) that you agree with.";
             create_bot_bubble(10);  table.rows[10].cells[0].querySelector("select").value = "checkboxes"; table.rows[10].cells[0].querySelector("textarea").value = "This chatbot is interesting; This chatbot is easy-to-use; This chatbot is funny";
+                                    table.rows[8].cells[0].querySelector("div.settings-button").innerHTML = "Delete Turn"; table.rows[8].cells[0].querySelector("div.settings-button").setAttribute( "onClick", "javascript: del_turn(this);" );
 
             var div = document.getElementById("history-container");
             div.scrollTop = 0;   // go to the top
