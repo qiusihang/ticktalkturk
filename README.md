@@ -1,5 +1,5 @@
 # TickTalkTurk
-**TickTalkTurk: Conversational Crowdsourcing Made Easy** ([DEMO](https://qiusihang.github.io/ticktalkturk/index.html)|[PDF](https://qiusihang.github.io/files/publications/cscw2020demo.pdf)).
+**TickTalkTurk: Conversational Crowdsourcing Made Easy** ([PDF](https://qiusihang.github.io/files/publications/cscw2020demo.pdf)).
 *Sihang Qiu, Ujwal Gadiraju, and Alessandro Bozzon.*
 CSCW 2020 Demonstration.
 
@@ -15,33 +15,24 @@ CSCW 2020 Demonstration.
 
 ![logo](logo.png)
 
-- The workflow of [conversational microtask crowdsourcing](https://qiusihang.github.io/files/publications/chi2020_worker_engagement.pdf) is defined in `./js/ticktalkturk.js` (*taketurn* function).
+- If you want to create a chatbot for online surveys/tasks, please visit this [PAGE](https://qiusihang.github.io/ticktalkturk) for chatbot settings.
 
-- The examples of crowdsourcing tasks are in the folder `./tasks/captcha/`.
+- The workflow of [conversational microtask crowdsourcing](https://qiusihang.github.io/files/publications/chi2020_worker_engagement.pdf) is defined in `./js/client.js` (complex task workflow can be customized here).
 
-## Usage
+- Download the code of the previous version [HERE](https://qiusihang.github.io/ticktalkturk/v1.zip).
 
-You can use the following code to deploy conversational crowdsourcing tasks on the *Design Layout* page for Amazon's Mechanical Turk. You can also find the code in `index.html`, which is an example HIT (human intelligence task).
+## Explanation
 
-```
-<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+- An **utterance** is a message shown in a speech bubble (speech balloon) from either the chatbot or the user.
 
-<crowd-form answer-format="flatten-objects" style="position:absolute;top:5px;left:20px;right:20px;bottom:10px">
-    <div id="chatbot"></div>
-</crowd-form>
+- Currently, an **utterance** of the chatbot can be of 4 types, i.e. text, image, radio buttons, and checkboxes.
 
-<script src="https://qiusihang.github.io/ticktalkturk/js/chatbot.js"></script>
-<script src="https://qiusihang.github.io/ticktalkturk/tasks/captcha/task1.js"></script> <!-- load crowdsourcing microtasks -->
-<script src="https://qiusihang.github.io/ticktalkturk/js/ticktalkturk.js"></script>
-<script>
-    var chatbot = new Chatbot(document.getElementById("chatbot"), taketurn);
-    // taketurn is a callback function defined in ticktalkturk.js
+- The user can give a response (i.e. an **utterance**) by either using text input (at the bottom of the UI) or using interactive **utterances** (i.e. buttons or checkboxes) sent by the chatbot.
 
-    window.onload = start_task;
-    // start_task is an initialization function defined in ticktalkturk.js
+- A conversational **turn** starts with an **utterance** of the chatbot, and ends with an **utterance** of the user (as a response to chatbot).
 
-    document.querySelector('crowd-form').onsubmit = function(e) {
-        if ( document.getElementById("chat-answers").value == "" ) e.preventDefault();
-    };
-</script>
-```
+- The **utterance** of the user can be validated using some keywords or phrases. If a keyword/phrase provided is found in the user's **utterance**, the conversation proceeds to the next **turn**. Otherwise, the user will be asked to provide a valid response.
+
+- Each **turn** has at least one chatbot's **utterance** and only one user's **utterance**.
+
+- A **conversation** consists of **turn**(s), and it has at least one **turn**.
