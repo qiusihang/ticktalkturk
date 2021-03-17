@@ -42,14 +42,10 @@
             font-family: Helvetica, Arial, sans-serif;
             letter-spacing:1px;
             text-align:center;
-            vertical-align:middle;
-            word-wrap:normal;
-            word-break: break-all;white-space: normal;
+            vertical-align:top;
             background: #333333;
             color: #ffffff;
             border-radius: 5px;
-            word-break: keep-all;
-            word-wrap: break-word;
             cursor: pointer;
             transition:.2s ease-out;
             user-select: none;
@@ -66,11 +62,13 @@
         }
         #foot{
             position: absolute;
-            bottom: 10px;
-            height: 80px;
+            bottom: 30px;
+            height: 60px;
             width: 100%;
+            max-width: 1000px;
             text-align: center;
             vertical-align: top;
+            left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
         }
         #preview{
             display: none;
@@ -87,21 +85,21 @@
 <body>
 
     <div id="head">
-        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle">Andrea</textarea></div>
+        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle"></textarea></div>
     </div>
     <div id="setting-container">
         <div id="history-container">
             <table id="chat-history">
             </table>
         </div>
-        <div id="message-container"><textarea id="message" name="message" placeholder="Type your message here" rows="1" disabled></textarea></div>
+        <div id="message-container"><textarea id="message" name="message" rows="1" disabled></textarea></div>
         <div id="send-button" style="cursor:auto;"><img src="./style/send.png" width="20px" style="vertical-align:middle"/></div>
     </div>
     <div id="foot">
-        <div class="button" onclick="preview()">Preview</div>
-        <div class="button" onclick="download_code()">Generate Code</div>
-        <div class="button" onclick="set_example()">Example</div>
-        <div class="button" onclick="clear_all()">Clear All</div>
+        <div class="button" style="float:left;margin-left:0px" onclick="set_example()">Example</div>
+        <div class="button" style="float:left" onclick="clear_all()">Clear All</div>
+        <div class="button" style="float:right;" onclick="download_code()">Generate Code</div>
+        <div class="button" style="float:right" onclick="preview()">Preview</div>
     </div>
     <div id="preview">
         <div style="position:absolute;top:10px;left:0px;right:0px;height:50px;text-align:center;z-index:10">
@@ -114,7 +112,7 @@
     <script>
         var chatbot_name = "test";
 
-        window.onload = function() {set_example();}
+        window.onload = function() {clear_all();}
 
         var to_bottom = function() {
             var div = document.getElementById("history-container");
@@ -123,17 +121,19 @@
 
         var create_bot_bubble = function(index, del=true) {
             var content = "\
-            <div class=\"left-arrow\"></div><div class=\"bubble\">\
-                Type: <select name=\"type\" oninput=\"select_type(this)\">\
+            <div class=\"left-arrow\" style=\"float:none;vertical-align:top\"></div><div class=\"bubble\" style=\"float: none;\">\
+                Chatbot Message Type: <select name=\"type\" oninput=\"select_type(this)\">\
                     <option value=\"text\">text</option>\
                     <option value=\"image\">image</option>\
                     <option value=\"buttons\">radio buttons</option>\
                     <option value=\"checkboxes\">checkboxes</option>\
                 </select><br/>\
-                Message:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in your message here...\"></textarea>\
-            </div>\
-            <div class=\"settings-button\" onclick=\"add_button(this)\">Add</div>";
+                Content:<br/><textarea class=\"bubble-message\" placeholder=\"Fill in your message here...\"></textarea>\
+            </div>";
             if (del) content += "<div class=\"settings-button\" onclick=\"del_button(this)\">Delete</div>";
+            content += "<br/><div class=\"settings-button\" style=\"";
+            content += "margin-top:5px;border-radius:0px 15px 0px 15px;background:#ffffff;color:#000000;box-shadow:1px 1px 1px rgba(0,0,0,0.1);min-width:20px";
+            content += "\" onclick=\"add_button(this)\" onmouseover=\"change_html(this,'Add Utterance')\" onmouseout=\"change_html(this,'+')\">+</div>";
             var table = document.getElementById("chat-history");
             var row = table.insertRow(index);
             var cell = row.insertCell();
@@ -144,7 +144,7 @@
         var create_bot_bubble_me = function(index) {
             var content = "\
             <div class=\"right-arrow\"></div><div class=\"bubble-me\">\
-                Validation: <select name=\"validation\" oninput=\"select_validation(this)\">\
+                User Input Validation: <select name=\"validation\" oninput=\"select_validation(this)\">\
                     <option value=\"none\">None</option>\
                     <option value=\"yes\">Keyword-based</option>\
                 </select><br/>\
@@ -213,6 +213,10 @@
             var row = e.parentNode.parentNode;
             var table = document.getElementById("chat-history");
             table.deleteRow(row.rowIndex);
+        }
+
+        var change_html = function(e, text) {
+            e.innerHTML = text;
         }
 
         var generate_conversation = function() {
@@ -343,6 +347,7 @@
         }
 
         var set_example = function() {
+            document.getElementById("chatbot-name").value = "Andrea";
             var table = document.getElementById("chat-history");
             while (table.rows.length > 0) table.deleteRow(0);
             create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hi, I'm Andrea. How are you doing? Can you help me complete this task?";
@@ -361,6 +366,7 @@
         }
 
         var clear_all = function() {
+            document.getElementById("chatbot-name").value = "";
             var table = document.getElementById("chat-history");
             while (table.rows.length > 0) table.deleteRow(0);
             create_new_turn(0);
