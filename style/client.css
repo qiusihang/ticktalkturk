@@ -7,9 +7,8 @@ html {
 }
 
 body{
-    background-image: url('https://qiusihang.github.io/ticktalkturk/style/pattern.png');
-    /* background: #e1e1ea; */
-    /* background:#e6e6e6; */
+    /* background-image: url('https://qiusihang.github.io/ticktalkturk/style/pattern.png'); */
+    background:#e6e6e6;
 }
 
 #container {
