@@ -70,6 +70,17 @@
             vertical-align: top;
             left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
         }
+        #foot2{
+            position: absolute;
+            bottom: 10px;
+            height: 20px;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            vertical-align: top;
+            font-family: Helvetica, Arial, sans-serif;
+            left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
+        }
         #preview{
             display: none;
             position: absolute;
@@ -101,6 +112,7 @@
         <div class="button" style="float:right;" onclick="download_code()">Generate Code</div>
         <div class="button" style="float:right" onclick="preview()">Preview</div>
     </div>
+    <div id="foot2">Github Repository: <a href="https://github.com/qiusihang/ticktalkturk">https://github.com/qiusihang/ticktalkturk</a></div>
     <div id="preview">
         <div style="position:absolute;top:10px;left:0px;right:0px;height:50px;text-align:center;z-index:10">
             <div class="button" style="border-radius: 20px;" onclick="close_preview()">CLOSE PREVIEW</div>
