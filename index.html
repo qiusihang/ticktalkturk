@@ -70,6 +70,17 @@
             vertical-align: top;
             left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
         }
+        #foot2{
+            position: absolute;
+            bottom: 10px;
+            height: 20px;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            vertical-align: top;
+            font-family: Helvetica, Arial, sans-serif;
+            left: 50%; -webkit-transform: translate(-50%, 0); -moz-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); -o-transform: translate(-50%, 0); transform: translate(-50%, 0);
+        }
         #preview{
             display: none;
             position: absolute;
@@ -85,7 +96,9 @@
 <body>
 
     <div id="head">
-        <div style="display:inline-block">What is chatbot's name? <textarea id="chatbot-name" rows="1" style="width:150px;resize:none;vertical-align:middle"></textarea></div>
+        <div style="display:inline-block">Chatbot's name: <textarea id="chatbot-name" rows="1" style="width:100px;resize:none;vertical-align:middle"></textarea></div> &nbsp;&nbsp;&nbsp;
+        <div style="display:inline-block">Chatbot's avatar: <textarea id="chatbot-avatar" rows="1" style="width:150px;resize:none;vertical-align:middle" placeholder="Image URL"></textarea></div> &nbsp;&nbsp;&nbsp;
+        <div style="display:inline-block">User's avatar: <textarea id="user-avatar" rows="1" style="width:150px;resize:none;vertical-align:middle" placeholder="Image URL"></textarea></div>
     </div>
     <div id="setting-container">
         <div id="history-container">
@@ -101,6 +114,7 @@
         <div class="button" style="float:right;" onclick="download_code()">Generate Code</div>
         <div class="button" style="float:right" onclick="preview()">Preview</div>
     </div>
+    <div id="foot2">Github Repository: <a href="https://github.com/qiusihang/ticktalkturk">https://github.com/qiusihang/ticktalkturk</a></div>
     <div id="preview">
         <div style="position:absolute;top:10px;left:0px;right:0px;height:50px;text-align:center;z-index:10">
             <div class="button" style="border-radius: 20px;" onclick="close_preview()">CLOSE PREVIEW</div>
@@ -313,8 +327,14 @@
             </body>\
             </html>";
             chatbot_name = document.getElementById("chatbot-name").value;
+            chatbot_image = document.getElementById("chatbot-avatar").value;
+            user_image = document.getElementById("user-avatar").value;
+            var survey_html = generate_conversation()
+                +(chatbot_name.length>0?"; var chatbot_name=\""+chatbot_name+"\"":"")
+                +(chatbot_image.length>0?"; var chatbot_image=\""+chatbot_image+"\"":"")
+                +(user_image.length>0?"; var user_image=\""+user_image+"\"":"");
             template = template.split("sssss").join("script");
-            template = template.replace("SURVEY",generate_conversation()+(chatbot_name.length>0?"; var chatbot_name=\""+chatbot_name+"\"":""));
+            template = template.replace("SURVEY",survey_html);
             template = template.split("    ").join("");
             return template;
         }
@@ -348,6 +368,8 @@
 
         var set_example = function() {
             document.getElementById("chatbot-name").value = "Andrea";
+            document.getElementById("chatbot-image").value = "https://qiusihang.github.io/ticktalkturk/res/andrea.png";
+            document.getElementById("user-image").value = "https://qiusihang.github.io/ticktalkturk/res/user_example.png";
             var table = document.getElementById("chat-history");
             while (table.rows.length > 0) table.deleteRow(0);
             create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hi, I'm Andrea. How are you doing? Can you help me complete this task?";

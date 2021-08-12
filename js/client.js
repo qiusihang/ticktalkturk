@@ -159,6 +159,16 @@ var checkbox_button = function(e) {
 }
 
 
+var user_image = "https://qiusihang.github.io/ticktalkturk/res/default.png";
+var chatbot_image = "https://qiusihang.github.io/avatarcs/ui/res/chatbot.png";
+var profile_image = function(username) {
+    if ( username == "__you__") {
+        return "<div style=\"float:right\" class=\"profile-image\"><img class=\"user-image\" height=\"100%\" src=\""+user_image+"\" /></div>";
+    } else {
+        return "<div style=\"float:left\" class=\"profile-image\"><img height=\"100%\" src=\""+chatbot_image+"\"/></div>";
+    }
+}
+
 var bubble = function(message) {
     // if the message is "loading", show loading animation
     // if the message starts with "buttons", show buttons
@@ -209,9 +219,9 @@ var bubble_content = function(message) {
         result += message_content.split('%%')[0]; // show message, remove comment
     }
     if (username == "__you__")
-        result = "<div class=\"right-arrow\"></div><div class=\"bubble-me\">" + result + "</div>";  // user's bubble
+        result = profile_image(username)+"<div class=\"right-arrow\"></div><div class=\"bubble-me\">" + result + "</div>";  // user's bubble
     else
-        result = "<div class=\"left-arrow\"></div><div class=\"bubble\">" + result + "</div>";      // other's bubble
+        result = profile_image(username)+"<div class=\"left-arrow\"></div><div class=\"bubble\">" + result + "</div>";      // other's bubble
     return result;
 }
 
