@@ -368,8 +368,8 @@
 
         var set_example = function() {
             document.getElementById("chatbot-name").value = "Andrea";
-            document.getElementById("chatbot-image").value = "https://qiusihang.github.io/ticktalkturk/res/andrea.png";
-            document.getElementById("user-image").value = "https://qiusihang.github.io/ticktalkturk/res/user_example.png";
+            document.getElementById("chatbot-avatar").value = "https://qiusihang.github.io/ticktalkturk/res/andrea.png";
+            document.getElementById("user-avatar").value = "https://qiusihang.github.io/ticktalkturk/res/user_example.png";
             var table = document.getElementById("chat-history");
             while (table.rows.length > 0) table.deleteRow(0);
             create_new_turn(0);     table.rows[0].cells[0].querySelector("textarea").value = "Hi, I'm Andrea. How are you doing? Can you help me complete this task?";
