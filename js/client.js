@@ -160,7 +160,7 @@ var checkbox_button = function(e) {
 
 
 var user_image = "https://qiusihang.github.io/ticktalkturk/res/default.png";
-var chatbot_image = "https://qiusihang.github.io/avatarcs/ui/res/chatbot.png";
+var chatbot_image = "https://qiusihang.github.io/ticktalkturk/res/chatbot.png";
 var profile_image = function(username) {
     if ( username == "__you__") {
         return "<div style=\"float:right\" class=\"profile-image\"><img class=\"user-image\" height=\"100%\" src=\""+user_image+"\" /></div>";
